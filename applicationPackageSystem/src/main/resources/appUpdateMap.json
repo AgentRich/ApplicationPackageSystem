@@ -1,0 +1,18 @@
+{
+    "updateMapList": [
+        {
+            "id": "testid",
+            "name": "testname",
+            "updateUrl": "testupdateUrl",
+            "downUrl": "testdownUrl",
+            "updateTime": "testTime"
+        },
+        {
+            "id": "testid2",
+            "name": "testname2",
+            "updateUrl": "testupdateUrl2",
+            "downUrl": "testdownUrl2",
+            "updateTime": "testTime2"
+        }
+    ]
+}
