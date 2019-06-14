@@ -44,7 +44,7 @@
              <el-table-column  label="操作" width="300">
 		      	<template slot-scope="{row,$index}">
   					<el-button type="success" icon="el-icon-check" circle @click="updateRow($index,row)" v-if="row.isShowEdit"></el-button>
-			      	<el-button type="primary" icon="el-icon-edit" circle @click="row.isShowEdit = true" v-else></el-button>
+			      	<el-button type="primary" icon="el-icon-edit" circle @click="editRow($index,row)" v-else></el-button>
 				  <el-button type="primary" icon="el-icon-share" v-if="!row.isShowEdit"></el-button>
 				  <el-button type="primary" icon="el-icon-delete"></el-button>
 			  	</template>

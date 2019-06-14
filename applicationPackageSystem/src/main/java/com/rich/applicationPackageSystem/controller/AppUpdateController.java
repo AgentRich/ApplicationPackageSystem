@@ -1,6 +1,8 @@
 package com.rich.applicationPackageSystem.controller;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -31,9 +33,9 @@ public class AppUpdateController {
 	}
 	
 	@PostMapping("/updateAppInfo2Map")
-	public Model updateAppInfo2Map(AppUpdateBean appUpdate) {
+	public Response updateAppInfo2Map(AppUpdateBean appUpdate) {
 		appuodateservice.allUpdateInfo2Map(appUpdate);
-		return null;
+		return new Response("200","successful",null);
 	}
 	/**
 	 * 列出所有可更新的软件列表
@@ -42,9 +44,9 @@ public class AppUpdateController {
 	 */
 	@RequestMapping("/listUpdateMap")
 	public Response listUpdateMap() throws IOException {
-		return new Response("200",
-				"successful",
-				appuodateservice.allUpdateMap());
+		Collection<AppUpdateBean> allUpdateMap = appuodateservice.allUpdateMap();
+		if(Objects.isNull(allUpdateMap)) return new Response("500","bad",null);
+		else return new Response("200","successful",allUpdateMap);
 	}
 	
 	

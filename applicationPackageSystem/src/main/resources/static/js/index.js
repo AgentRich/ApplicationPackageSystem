@@ -20,8 +20,8 @@ var app = new Vue({
 		  common.AjAxReturnJson("/listUpdateMap", null, true, "get", function(jsonData){
 			  if(jsonData.code!=200) message = jsonData.msg;
 			  else {
-				  that.appUpdateMapList = jsonData.data.updateMapList 
-				  for (var i = 0; i < that.appUpdateMapList.length; i++) {
+				  that.appUpdateMapList = jsonData.data
+				  for (var i = 0; i < that.appUpdateMapList; i++) {
 					  that.$set(that.appUpdateMapList[i], 'isShowEdit', false)
 				  }
 				  console.log(that.appUpdateMapList);
@@ -40,14 +40,18 @@ var app = new Vue({
 				  , "isShowEdit": false};
 		  this.appUpdateMapList.push(temp);
 	  },
+	  editRow: function(index,row){
+		  row.isShowEdit = true
+		  console.log(index)
+	  },
 	  updateRow: function(index,row){
 		  //加载进度条
 		  //向后台发送更新数据和请求
-		  common.AjAxReturnJson("/updateAppInfo2Map", row, true, "post", function(jsonData){
-			  console.log(jsonData)
-		  })
-		  //进度条完成并恢复编辑状态
-		  row.isShowEdit = false
+//		  common.AjAxReturnJson("/updateAppInfo2Map", row, true, "post", function(jsonData){
+//			  console.log(jsonData)
+			  //进度条完成并恢复编辑状态
+			  row.isShowEdit = false
+//		  })
 	  }
   },
   mounted: function () {

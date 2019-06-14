@@ -1,23 +1,26 @@
 package com.rich.applicationPackageSystem.service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.rich.applicationPackageSystem.dao.AppUpdateDAO;
 import com.rich.applicationPackageSystem.pojo.AppUpdateBean;
 
 @Service
 public class AppUpdateService {
+	@Autowired
+	private AppUpdateDAO appUpdateDAO;
 
-	public JSONObject allUpdateMap() throws IOException {
-		File updateMapJsonFile = ResourceUtils.getFile("classpath:appUpdateMap.json");
-		JSONObject json = JSON.parseObject(new FileInputStream(updateMapJsonFile), JSONObject.class);
-		return json;
+	public Collection<AppUpdateBean> allUpdateMap() throws IOException {
+		Map<String, AppUpdateBean> appUpdateBeans = appUpdateDAO.getAppUpdateBeans();
+		if(Objects.isNull(appUpdateBeans)) return null;
+		else return appUpdateBeans.values();
 	}
 
 	
