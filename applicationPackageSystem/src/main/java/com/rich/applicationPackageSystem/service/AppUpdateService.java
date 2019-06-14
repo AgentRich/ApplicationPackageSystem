@@ -9,6 +9,7 @@ import org.springframework.util.ResourceUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.rich.applicationPackageSystem.pojo.AppUpdateBean;
 
 @Service
 public class AppUpdateService {
@@ -16,8 +17,13 @@ public class AppUpdateService {
 	public JSONObject allUpdateMap() throws IOException {
 		File updateMapJsonFile = ResourceUtils.getFile("classpath:appUpdateMap.json");
 		JSONObject json = JSON.parseObject(new FileInputStream(updateMapJsonFile), JSONObject.class);
-		System.out.println(json);
 		return json;
+	}
+
+	
+	public void allUpdateInfo2Map(AppUpdateBean appUpdate) {
+		String appUpdateJson = JSON.toJSONString(appUpdate);
+		
 	}
 	
 	

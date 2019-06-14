@@ -3,6 +3,8 @@ package com.rich.applicationPackageSystem.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,21 @@ public class AppUpdateController {
 	private AppUpdateService appuodateservice;
 	
 	/**
+	 * 向软件更新列表中添加软件更新的信息
+	 */
+	@PutMapping("/addUpdateApp2Map")
+	public JSONObject addUpdateApp2Map(AppUpdateBean appUpdate) {
+		String id = appUpdate.getId();
+		
+		return null;
+	}
+	
+	@PostMapping("/updateAppInfo2Map")
+	public Model updateAppInfo2Map(AppUpdateBean appUpdate) {
+		appuodateservice.allUpdateInfo2Map(appUpdate);
+		return null;
+	}
+	/**
 	 * 列出所有可更新的软件列表
 	 * @return 软件列表数据
 	 * @throws IOException 
@@ -30,14 +47,5 @@ public class AppUpdateController {
 				appuodateservice.allUpdateMap());
 	}
 	
-	/**
-	 * 向软件更新列表中添加软件更新的信息
-	 */
-	@PutMapping("/addUpdateApp2Map")
-	public JSONObject addUpdateApp2Map(AppUpdateBean appUpdate) {
-		String id = appUpdate.getId();
-		
-		return null;
-	}
 	
 }

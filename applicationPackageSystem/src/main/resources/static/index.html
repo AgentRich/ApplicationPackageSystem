@@ -3,42 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <title>appUpdateMap</title>
+
+<!-- vue -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
  <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>  -->
+ 
+ <!-- element ui -->
 <!-- 引入样式 -->
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
 	<el-container id="app">
 		<el-header>
-			<div>
+			<div class="header-div">
 				{{message}}
 			</div>
 		</el-header>
 		
 		<el-main>
-			
-			<el-table :data="appUpdateMapList" style="width: 100%" stripe v-loading="loading">
-			<el-table-column type="index" :index="indexMethod"></el-table-column>
-		      <el-table-column  label="icon" width="50">
-		        <i class="el-icon-picture-outline"></i>
-		      </el-table-column>
-		      <el-table-column prop="updateTime" label="最后更新日期" width="180">
-		      </el-table-column>
-		      <el-table-column prop="id" label="应用Id" width="180">
-		      </el-table-column>
-		      <el-table-column prop="name" label="应用名" width="180">
-		      </el-table-column>
-		      <el-table-column prop="updateUrl" label="应用更新网站" width="180">
-		      </el-table-column>
-		      <el-table-column prop="downUrl" label="应用真实下载地址" width="180">
-		      </el-table-column>
-		      <el-table-column  label="操作" width="300">
-			      <el-button type="primary" icon="el-icon-edit"></el-button>
-				  <el-button type="primary" icon="el-icon-share"></el-button>
+			<el-button type="success" round @click="addRow()">添加一个应用map</el-button>
+			<el-table :data="appUpdateMapList" style="width: 100%" stripe v-loading="loading" highlight-current-row>
+			<!-- 不可编辑列 -->
+			<el-table-column type="index" ></el-table-column>
+		    <el-table-column prop="updateTime" label="最后更新日期" width="180">
+		    </el-table-column>
+		    <el-table-column prop="id" label="应用Id" width="180">
+		    </el-table-column>
+			<!-- 可编辑列 -->
+			<el-table-column v-for="(app,i) in editableColumns" :prop="app.field" :label="app.title" :width="app.width">
+                <template slot-scope="{row,$index}">
+			      	<el-input v-model="row[app.field]" v-if="row.isShowEdit"></el-input>
+			    	<span v-else>{{row[app.field]}}</span>
+	      		</template>
+             </el-table-column>
+             <!-- 操作列 -->
+             <el-table-column  label="操作" width="300">
+		      	<template slot-scope="{row,$index}">
+  					<el-button type="success" icon="el-icon-check" circle @click="updateRow($index,row)" v-if="row.isShowEdit"></el-button>
+			      	<el-button type="primary" icon="el-icon-edit" circle @click="row.isShowEdit = true" v-else></el-button>
+				  <el-button type="primary" icon="el-icon-share" v-if="!row.isShowEdit"></el-button>
 				  <el-button type="primary" icon="el-icon-delete"></el-button>
+			  	</template>
 		      </el-table-column>
     		</el-table>
 		</el-main>
