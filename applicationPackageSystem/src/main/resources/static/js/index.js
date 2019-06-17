@@ -41,20 +41,33 @@ var app = new Vue({
 		  this.appUpdateMapList.push(temp);
 	  },
 	  editRow: function(index,row){
-		  row.isShowEdit = true
-		  console.log(index)
+//		  e.set 因为v-for的影响可能引起页面不响应式渲染
+//		  Vue.set(this.appUpdateMapList, index, row)
+		  Vue.delete(row, 'isShowEdit')
+		  Vue.set(row, 'isShowEdit', true)
 	  },
-	  updateRow: function(index,row){
+	  updateRow: function(index,row,remove){
+		  var that = this
 		  //加载进度条
+		  row.updateTime=common.dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss")
+		  var data;
+		  if(remove) data = {"removeId" : row.id}
+		  else data = row
 		  //向后台发送更新数据和请求
-//		  common.AjAxReturnJson("/updateAppInfo2Map", row, true, "post", function(jsonData){
-//			  console.log(jsonData)
-			  //进度条完成并恢复编辑状态
-			  row.isShowEdit = false
-//		  })
+		  common.AjAxReturnJson("/updateAppInfo2Map", data, true, "post", function(jsonData){
+			  console.log(jsonData)
+			  //进度条完成并恢复编辑状态或删除行
+			  if(remove) Vue.delete(that.appUpdateMapList, index, row)
+			  else{
+				  //直接set List和先删除再set是一样的效果但是必须使用Vue.set 因为v-for的影响可能引起页面不响应式渲染
+				  //Vue.set(this.appUpdateMapList, index, row)
+				  Vue.delete(row, 'isShowEdit')
+				  Vue.set(row, 'isShowEdit', false)
+			  }
+		  })
 	  }
   },
-  mounted: function () {
+  created: function () {
 	  this.initAppUpdateMapList()
   }
 })

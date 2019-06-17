@@ -27,28 +27,30 @@
 		<el-main>
 			<el-button type="success" round @click="addRow()">添加一个应用map</el-button>
 			<el-table :data="appUpdateMapList" style="width: 100%" stripe v-loading="loading" highlight-current-row>
-			<!-- 不可编辑列 -->
-			<el-table-column type="index" ></el-table-column>
-		    <el-table-column prop="updateTime" label="最后更新日期" width="180">
-		    </el-table-column>
-		    <el-table-column prop="id" label="应用Id" width="180">
-		    </el-table-column>
-			<!-- 可编辑列 -->
-			<el-table-column v-for="(app,i) in editableColumns" :prop="app.field" :label="app.title" :width="app.width">
-                <template slot-scope="{row,$index}">
-			      	<el-input v-model="row[app.field]" v-if="row.isShowEdit"></el-input>
-			    	<span v-else>{{row[app.field]}}</span>
-	      		</template>
-             </el-table-column>
-             <!-- 操作列 -->
-             <el-table-column  label="操作" width="300">
-		      	<template slot-scope="{row,$index}">
-  					<el-button type="success" icon="el-icon-check" circle @click="updateRow($index,row)" v-if="row.isShowEdit"></el-button>
-			      	<el-button type="primary" icon="el-icon-edit" circle @click="editRow($index,row)" v-else></el-button>
-				  <el-button type="primary" icon="el-icon-share" v-if="!row.isShowEdit"></el-button>
-				  <el-button type="primary" icon="el-icon-delete"></el-button>
-			  	</template>
-		      </el-table-column>
+				<!-- 不可编辑列 -->
+				<el-table-column type="index" ></el-table-column>
+			    <el-table-column prop="updateTime" label="最后更新日期" width="180">
+			    </el-table-column>
+			    <el-table-column prop="id" label="应用Id" width="180">
+			    </el-table-column>
+
+				<!-- 可编辑列 -->
+				<el-table-column v-for="(app,i) in editableColumns" :prop="app.field" :label="app.title" :width="app.width" :key="i">
+	                <template slot-scope="{row,$index}">
+				      	<el-input v-model="row[app.field]" v-if="row.isShowEdit"></el-input>
+				    	<span v-else>{{row[app.field]}}</span>
+		      		</template>
+	            </el-table-column>
+
+	            <!-- 操作列 -->
+	            <el-table-column  label="操作" width="300">
+			      	<template slot-scope="{row,$index}">
+	  					<el-button v-if="row.isShowEdit" type="success" icon="el-icon-check" circle @click="updateRow($index,row,false)" ></el-button>
+				      	<el-button v-else type="primary" icon="el-icon-edit" circle @click="editRow($index,row)"></el-button>
+						<el-button type="primary" icon="el-icon-share" v-if="!row.isShowEdit"></el-button>
+						<el-button type="primary" icon="el-icon-delete" @click="updateRow($index,row,true)"></el-button>
+				  	</template>
+			     </el-table-column>
     		</el-table>
 		</el-main>
 	</el-container>

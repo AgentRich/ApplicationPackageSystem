@@ -5,13 +5,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.rich.applicationPackageSystem.common.Response;
 import com.rich.applicationPackageSystem.pojo.AppUpdateBean;
 import com.rich.applicationPackageSystem.service.AppUpdateService;
@@ -20,21 +19,12 @@ import com.rich.applicationPackageSystem.service.AppUpdateService;
 public class AppUpdateController {
 	
 	@Autowired
-	private AppUpdateService appuodateservice;
+	private AppUpdateService appUpdateService;
 	
-	/**
-	 * 向软件更新列表中添加软件更新的信息
-	 */
-	@PutMapping("/addUpdateApp2Map")
-	public JSONObject addUpdateApp2Map(AppUpdateBean appUpdate) {
-		String id = appUpdate.getId();
-		
-		return null;
-	}
 	
 	@PostMapping("/updateAppInfo2Map")
-	public Response updateAppInfo2Map(AppUpdateBean appUpdate) {
-		appuodateservice.allUpdateInfo2Map(appUpdate);
+	public Response updateAppInfo2Map(AppUpdateBean appUpdate,String removeId) {
+		appUpdateService.updateInfo2Map(appUpdate,removeId);
 		return new Response("200","successful",null);
 	}
 	/**
@@ -44,7 +34,7 @@ public class AppUpdateController {
 	 */
 	@RequestMapping("/listUpdateMap")
 	public Response listUpdateMap() throws IOException {
-		Collection<AppUpdateBean> allUpdateMap = appuodateservice.allUpdateMap();
+		Collection<AppUpdateBean> allUpdateMap = appUpdateService.allUpdateMap();
 		if(Objects.isNull(allUpdateMap)) return new Response("500","bad",null);
 		else return new Response("200","successful",allUpdateMap);
 	}

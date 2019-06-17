@@ -1,18 +1,1 @@
-{
-    "updateMapList": [
-        {
-            "id": "testid",
-            "name": "testname",
-            "updateUrl": "testupdateUrl",
-            "downUrl": "testdownUrl",
-            "updateTime": "testTime"
-        },
-        {
-            "id": "testid2",
-            "name": "testname2",
-            "updateUrl": "testupdateUrl2",
-            "downUrl": "testdownUrl2",
-            "updateTime": "testTime2"
-        }
-    ]
-}
+{"updateMapList":[{"downUrl":"tes111tdownUrl2","id":"testid2","name":"testname2111","updateTime":"testTime2","updateUrl":"testupdateUrl2111"},{"downUrl":"testdownUrl","id":"testid","name":"testname","updateTime":"testTime","updateUrl":"testupdateUrl"}]}

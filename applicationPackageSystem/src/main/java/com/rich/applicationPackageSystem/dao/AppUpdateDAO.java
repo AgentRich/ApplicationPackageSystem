@@ -1,8 +1,7 @@
 package com.rich.applicationPackageSystem.dao;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,5 +50,23 @@ public class AppUpdateDAO {
 			isInited = false;
 			return null;
 		}
+	}
+	
+	public void updateMapFile(Map<String, AppUpdateBean> updateMap) {
+		//构造appUpdateMap.json的结构
+		JSONObject updateJson = new JSONObject(new HashMap<String,Object>()) {
+			private static final long serialVersionUID = -7011423692609901386L;
+			{
+				put("updateMapList",updateMap.values());
+			}
+		};
+		//更新文件
+		try(FileOutputStream os = new FileOutputStream(ResourceUtils.getFile("classpath:appUpdateMap.json"))) {
+			JSON.writeJSONString(os, updateJson);
+		} catch (IOException e) {
+			log.error("更新appUpdateMap.json文件时报错",e);
+		} 
+		//刷新appUpdateBeans
+		initOrRefreshBeansMap();
 	}
 }
