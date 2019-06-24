@@ -3,10 +3,12 @@ package com.rich.applicationPackageSystem.dao;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -36,7 +38,7 @@ public class AppUpdateDAO {
 	}
 	
 	private Map<String, AppUpdateBean> initOrRefreshBeansMap() {
-		try(FileInputStream appUpdateMapJsonStream = new FileInputStream(ResourceUtils.getFile("classpath:appUpdateMap.json"))) {
+		try(InputStream appUpdateMapJsonStream =  new ClassPathResource("appUpdateMap.json").getInputStream()) {
 			JSONObject json = JSON.parseObject(appUpdateMapJsonStream, JSONObject.class);
 			JSONArray jsonArray = json.getJSONArray("updateMapList");
 			for (Object obj : jsonArray) {
