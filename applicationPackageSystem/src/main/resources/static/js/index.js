@@ -17,7 +17,7 @@ var app = new Vue({
   methods: {
 	  initAppUpdateMapList: function(){
 		  var that = this;
-		  common.AjAxReturnJson("/listUpdateMap", null, true, "get", function(jsonData){
+		  common.AjaxReturnJson("/listUpdateMap", null, true, "get", function(jsonData){
 			  if(jsonData.code!=200) message = jsonData.msg;
 			  else {
 				  that.appUpdateMapList = jsonData.data
@@ -49,12 +49,13 @@ var app = new Vue({
 	  updateRow: function(index,row,remove){
 		  var that = this
 		  //加载进度条
+		  
 		  row.updateTime=common.dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss")
 		  var data;
 		  if(remove) data = {"removeId" : row.id}
 		  else data = row
 		  //向后台发送更新数据和请求
-		  common.AjAxReturnJson("/updateAppInfo2Map", data, true, "post", function(jsonData){
+		  common.AjaxReturnJson("/updateAppInfo2Map", data, true, "post", function(jsonData){
 			  console.log(jsonData)
 			  //进度条完成并恢复编辑状态或删除行
 			  if(remove) Vue.delete(that.appUpdateMapList, index, row)
@@ -64,6 +65,14 @@ var app = new Vue({
 				  Vue.delete(row, 'isShowEdit')
 				  Vue.set(row, 'isShowEdit', false)
 			  }
+		  })
+	  },
+	  updatePack: function(row){
+		  console.log(row)
+		  var data = row
+		  //向后台发送更新数据和请求
+		  common.AjaxReturnJson("/updateAppPack", data, true, "post", function(jsonData){
+			  console.log(jsonData)
 		  })
 	  }
   },

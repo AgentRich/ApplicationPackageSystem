@@ -47,8 +47,8 @@
 			      	<template slot-scope="{row,$index}">
 	  					<el-button v-if="row.isShowEdit" type="success" icon="el-icon-check" circle @click="updateRow($index,row,false)" ></el-button>
 				      	<el-button v-else type="primary" icon="el-icon-edit" circle @click="editRow($index,row)"></el-button>
-						<el-button type="primary" icon="el-icon-share" v-if="!row.isShowEdit"></el-button>
 						<el-button type="primary" icon="el-icon-delete" @click="updateRow($index,row,true)"></el-button>
+						<el-button type="primary" v-if="!row.isShowEdit" @click="updatePack(row)">更新包<i class="el-icon-upload el-icon--right"></i></el-button>
 				  	</template>
 			     </el-table-column>
     		</el-table>

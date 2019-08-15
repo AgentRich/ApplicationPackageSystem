@@ -12,7 +12,7 @@ var common = {
 	
 	
 	// 通用ajaxGet方法
-	AjAxReturnJson: function (url, data, async, type, callBack) {
+	AjaxReturnJson: function (url, data, async, type, callBack) {
 		$.ajax({
 			url: url, // 请求的url地址
 			data: data,
