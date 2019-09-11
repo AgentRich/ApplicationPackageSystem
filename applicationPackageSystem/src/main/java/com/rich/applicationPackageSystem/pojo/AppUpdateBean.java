@@ -27,5 +27,8 @@ public class AppUpdateBean {
 	@EqualsAndHashCode.Exclude
 	private String updateTime;
 	
+	/** 软件更新状态 0代表未更新 1代表正在更新中 */
+	@EqualsAndHashCode.Exclude
+	private Integer updateStatus;
 	
 }

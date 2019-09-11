@@ -29,10 +29,9 @@
 			<el-table :data="appUpdateMapList" style="width: 100%" stripe v-loading="loading" highlight-current-row>
 				<!-- 不可编辑列 -->
 				<el-table-column type="index" ></el-table-column>
-			    <el-table-column prop="updateTime" label="最后更新日期" width="180">
-			    </el-table-column>
-			    <el-table-column prop="id" label="应用Id" width="180">
-			    </el-table-column>
+				<el-table-column prop="updateStatusStr" label="软件更新状态" ></el-table-column>
+			    <el-table-column prop="updateTime" label="最后更新日期" width="180"></el-table-column>
+			    <el-table-column prop="id" label="应用Id" width="180"></el-table-column>
 
 				<!-- 可编辑列 -->
 				<el-table-column v-for="(app,i) in editableColumns" :prop="app.field" :label="app.title" :width="app.width" :key="i">
